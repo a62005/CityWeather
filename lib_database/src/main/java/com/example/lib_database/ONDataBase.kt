@@ -4,11 +4,11 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.example.lib_database.dao.TestDao
-import com.example.lib_database.entities.TestEntity
+import com.example.lib_database.dao.CityDao
+import com.example.lib_database.entities.CityBean
 
 @Database(
-    entities = [TestEntity::class],
+    entities = [CityBean::class],
     version = 1,
     exportSchema = false
 )
@@ -34,5 +34,5 @@ abstract class ONDataBase : RoomDatabase() {
                 .build()
     }
 
-    abstract fun testDao(): TestDao
+    abstract fun cityDao(): CityDao
 }

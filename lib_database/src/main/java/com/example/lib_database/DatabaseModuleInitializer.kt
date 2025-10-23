@@ -23,8 +23,7 @@ class DatabaseModuleInitializer : Initializer<String> {
     }
 
     private val daoModule = module {
-        factory { get<ONDataBase>().testDao() }
-
+        factory { get<ONDataBase>().cityDao() }
     }
 
     private val moduleList: List<Module> = listOf(module {
