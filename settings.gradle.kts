@@ -21,4 +21,4 @@ dependencyResolutionManagement {
 
 rootProject.name = "OpenNetInterview"
 include(":app")
- 
+include(":lib_database")
