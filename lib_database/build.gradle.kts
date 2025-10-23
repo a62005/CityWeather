@@ -40,8 +40,8 @@ dependencies {
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
 
-    api(libs.room)
-    api(libs.room.ktx)
+    implementation(libs.room)
+    implementation(libs.room.ktx)
     ksp(libs.room.compiler)
 
     implementation(libs.gson)

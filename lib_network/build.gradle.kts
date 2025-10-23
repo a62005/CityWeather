@@ -35,11 +35,11 @@ android {
 dependencies {
     implementation(libs.androidx.core.ktx)
     
-    implementation(libs.retrofit)
-    implementation(libs.retrofit.gson)
-    implementation(libs.okhttp)
+    api(libs.retrofit)
+    api(libs.retrofit.gson)
+    api(libs.okhttp)
     implementation(libs.okhttp.logging)
-    implementation(libs.gson)
+    api(libs.gson)
 
     implementation(libs.koin)
     implementation(libs.androidx.startup.runtime)
