@@ -23,8 +23,16 @@ class NetworkTest {
     @Test
     fun insert() {
         runBlocking {
-            val resp = networkManager.countryApiService.getCountryInfo("TW")
-            println("Response: ${resp.isSuccessful}, Body: ${resp.body()}")
+            val countryResp = networkManager.countryApiService.getCountryInfo("TW")
+            val data = countryResp.body()?.firstOrNull()
+            println("Country Response: ${countryResp.isSuccessful}, Body: $data")
+
+            data?.let {
+                val weatherResp = networkManager.weatherApiService.getWeather(it.latitude, it.longitude)
+                println("Weather Response: ${weatherResp.isSuccessful}, Body: ${weatherResp.body()}")
+            } ?: run {
+                println("No country data found for TW")
+            }
         }
     }
 
