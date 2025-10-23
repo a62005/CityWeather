@@ -21,7 +21,7 @@ class TestApplication : Application() {
             single {
                 ONDataBase.invokeTestDatabase(get())
             }
-            single { get<ONDataBase>().cityDao() }
-        }
+        },
+        daoModule
     )
 }
