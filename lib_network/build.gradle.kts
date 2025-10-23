@@ -42,7 +42,8 @@ dependencies {
     implementation(libs.gson)
 
     implementation(libs.koin)
-    
+    implementation(libs.androidx.startup.runtime)
+
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
