@@ -4,9 +4,11 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import com.example.lib_database.dao.TestDao
+import com.example.lib_database.entities.TestEntity
 
 @Database(
-    entities = [],
+    entities = [TestEntity::class],
     version = 1,
     exportSchema = false
 )
@@ -31,4 +33,6 @@ abstract class ONDataBase : RoomDatabase() {
             Room.databaseBuilder(context, ONDataBase::class.java, "ONDataBase.db")
                 .build()
     }
+
+    abstract fun testDao(): TestDao
 }

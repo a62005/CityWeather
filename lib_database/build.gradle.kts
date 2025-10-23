@@ -46,4 +46,5 @@ dependencies {
 
     implementation(libs.gson)
     implementation(libs.koin)
+    implementation(libs.androidx.startup.runtime)
 }
