@@ -13,7 +13,7 @@ import org.koin.java.KoinJavaComponent.inject
 @LargeTest
 class DatabaseTest {
 
-    private val gameDB: ONDataBase by inject(ONDataBase::class.java)
+    private val db: ONDataBase by inject(ONDataBase::class.java)
 
     @Before
     fun setUp() {
