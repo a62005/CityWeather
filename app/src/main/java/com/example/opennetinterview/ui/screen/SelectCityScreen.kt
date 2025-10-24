@@ -1,6 +1,7 @@
 package com.example.opennetinterview.ui.screen
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
@@ -15,6 +16,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -24,17 +26,18 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.opennetinterview.viewmodel.SelectCityViewModel
 import com.example.lib_database.entities.CityBean
 import com.example.opennetinterview.R
 import com.example.opennetinterview.ui.item.CityItem
 import com.example.opennetinterview.ui.theme.OpenNetInterviewTheme
+import com.example.opennetinterview.viewmodel.SelectCityViewModel
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
@@ -44,7 +47,7 @@ fun SelectCityScreen(
     viewModel: SelectCityViewModel = koinViewModel()
 ) {
     val citiesList by viewModel.citiesList.collectAsState()
-    
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -95,11 +98,21 @@ fun SelectCityScreen(
                 verticalArrangement = Arrangement.spacedBy(4.dp)
             ) {
                 items(citiesList) { city ->
-                    CityItem(
-                        country = city.country,
-                        city = city.city,
-                        onClick = { onCityClick(city) }
-                    )
+                    Box(
+                        modifier = Modifier
+                            .border(
+                                width = 2.dp, // 邊框粗細
+                                color = Color.Gray, // 邊框顏色
+                                shape = RoundedCornerShape(8.dp) // 圓角形狀
+                            )
+                    ) {
+                        CityItem(
+                            country = city.country,
+                            city = city.city,
+                            onClick = { onCityClick(city) }
+                        )
+                    }
+
                 }
             }
         }
