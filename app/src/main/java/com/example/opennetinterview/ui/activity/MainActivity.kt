@@ -16,14 +16,10 @@ import com.example.opennetinterview.ui.theme.OpenNetInterviewTheme
 class MainActivity() : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
         setContent {
             OpenNetInterviewTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    MainScreen(
-                        name = "Android",
-                        modifier = Modifier.padding(innerPadding)
-                    )
+                    MainScreen()
                 }
             }
         }
@@ -34,6 +30,6 @@ class MainActivity() : ComponentActivity() {
 @Composable
 fun GreetingPreview() {
     OpenNetInterviewTheme {
-        MainScreen("Android")
+        MainScreen()
     }
 }

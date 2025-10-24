@@ -1,14 +1,20 @@
 package com.example.opennetinterview.ui.card
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.expandVertically
+import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -23,30 +29,51 @@ import com.example.opennetinterview.ui.item.WeekWeatherItem
 import com.example.opennetinterview.ui.theme.OpenNetInterviewTheme
 
 @Composable
-fun CityWeatherCard(cityBean: CityBean, weatherBean: WeatherBean, weekWeatherList: List<WeekWeatherBean>) {
+fun CityWeatherCard(
+    cityBean: CityBean, 
+    weatherBean: WeatherBean, 
+    weekWeatherList: List<WeekWeatherBean>,
+    modifier: Modifier = Modifier
+) {
+    var isExpanded by remember { mutableStateOf(true) }
+    
     Column(
-        modifier = Modifier
+        modifier = modifier
             .border(
                 width = 2.dp, // 邊框粗細
                 color = Color.Gray, // 邊框顏色
                 shape = RoundedCornerShape(8.dp) // 圓角形狀
             )
     ) {
-        CityItem(cityBean.country, cityBean.city)
-        WeatherItem(weatherBean)
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(8.dp),
+        CityItem(
+            country = cityBean.country, 
+            city = cityBean.city,
+            onClick = { isExpanded = !isExpanded }
+        )
+        
+        // 使用 AnimatedVisibility 來控制展開/收起動畫
+        AnimatedVisibility(
+            visible = isExpanded,
+            enter = expandVertically(),
+            exit = shrinkVertically()
         ) {
-            weekWeatherList.forEach { weekWeather ->
-                Box(
+            Column {
+                WeatherItem(weatherBean)
+                Row(
                     modifier = Modifier
-                        .weight(1f)
-                        .fillMaxWidth(),
-                    contentAlignment = Alignment.Center
+                        .fillMaxWidth()
+                        .padding(8.dp),
                 ) {
-                    WeekWeatherItem(bean = weekWeather)
+                    weekWeatherList.forEach { weekWeather ->
+                        Box(
+                            modifier = Modifier
+                                .weight(1f)
+                                .fillMaxWidth(),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            WeekWeatherItem(bean = weekWeather)
+                        }
+                    }
                 }
             }
         }
