@@ -2,8 +2,8 @@
     <string name="app_name">OpenNetInterview</string>
     
     <!-- Weather Item -->
-    <string name="chance_of_rain">Chance of rain: %d%%</string>
-    <string name="humidity">Humidity: %d%%</string>
-    <string name="wind_speed">Wind speed: %d km/h</string>
+    <string name="chance_of_rain">Rain: %d%%</string>
+    <string name="humidity">Hum: %d%%</string>
+    <string name="wind_speed">Wind: %dkm/h</string>
     <string name="btn_select_other_city">Select Other City</string>
 </resources>

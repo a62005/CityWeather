@@ -14,7 +14,7 @@ object TimeUtils {
      * @return 英文星期幾，例如: "Friday"
      */
     fun formatToWeekday(dateString: String): String {
-        return if (Build.VERSION.SDK_INT >= 26) {
+        val weekday =  if (Build.VERSION.SDK_INT >= 26) {
             val date = LocalDate.parse(dateString)
             date.format(DateTimeFormatter.ofPattern("EEEE", Locale.ENGLISH))
         } else {
@@ -23,6 +23,7 @@ object TimeUtils {
             val date = inputFormat.parse(dateString)
             outputFormat.format(date!!)
         }
+        return weekday.take(3)
     }
 
     /**
