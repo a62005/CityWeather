@@ -8,6 +8,8 @@ data class WeatherBean(
     val city: String,
     val timeInMillis: Long,
     val date: String,
+    val weekOfDay: String,
+    val timeOfDay: String?,
     val weather: String,
     val weatherUrl: String,
     val changeOfRain: Int,
@@ -16,4 +18,12 @@ data class WeatherBean(
     val tempMax: Int,
     val humidity: Int,
     val windKph: Int
+)
+
+data class WeekWeatherBean(
+    val weekOfDay: String,
+    val weatherUrl: String,
+    val changeOfRain: Int,
+    val tempMin: Int,
+    val tempMax: Int
 )

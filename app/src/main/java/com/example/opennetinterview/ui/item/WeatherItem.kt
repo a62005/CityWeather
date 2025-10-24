@@ -98,7 +98,7 @@ fun WeatherItem(bean: WeatherBean) {
                 horizontalAlignment = Alignment.End
             ) {
                 Text(
-                    text = bean.date,
+                    text = "${bean.weekOfDay} ${bean.date}",
                     fontSize = 12.sp,
                     lineHeight = 14.sp
                 )
@@ -121,7 +121,9 @@ fun WeatherItemPreview() {
                 country = "Taiwan",
                 city = "Taipei",
                 timeInMillis = System.currentTimeMillis(),
-                date = "Friday 3:00 PM",
+                date = "10/24",
+                weekOfDay = "Friday",
+                timeOfDay = "3:00 PM",
                 weather = "Sunny",
                 weatherUrl = "https://cdn.weatherapi.com/weather/64x64/day/308.png",
                 changeOfRain = 10,
