@@ -16,9 +16,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import com.example.lib_database.entities.CityBean
-import com.example.lib_database.entities.WeatherBean
-import com.example.lib_database.entities.WeekWeatherBean
 import com.example.opennetinterview.R
 import com.example.opennetinterview.ui.card.CityWeatherCard
 import com.example.opennetinterview.viewmodel.MainViewModel
@@ -30,7 +27,6 @@ fun MainScreen(
     mainViewModel: MainViewModel = koinViewModel(),
     onSelectCityClick: () -> Unit = {}
 ) {
-    // 收集 ViewModel 的資料
     val city by mainViewModel.city.collectAsStateWithLifecycle(initialValue = null)
     val todayWeather by mainViewModel.todayWeather.collectAsStateWithLifecycle(initialValue = null)
     val weekWeather by mainViewModel.weekWeather.collectAsStateWithLifecycle(initialValue = emptyList())
@@ -41,7 +37,6 @@ fun MainScreen(
             .padding(10.dp),
         verticalArrangement = Arrangement.SpaceBetween
     ) {
-        // 檢查資料是否已載入
         if (city != null && todayWeather != null) {
             CityWeatherCard(
                 cityBean = city!!,
@@ -49,7 +44,6 @@ fun MainScreen(
                 weekWeatherList = weekWeather
             )
         } else {
-            // 顯示載入中狀態
             Box(
                 modifier = Modifier.fillMaxWidth().weight(1f),
                 contentAlignment = Alignment.Center

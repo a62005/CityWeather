@@ -36,7 +36,6 @@ fun CityItem(
             .padding(6.dp),
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
-        // 城市名稱
         Text(
             text = city,
             fontSize = 24.sp,

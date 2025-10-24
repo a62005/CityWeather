@@ -40,9 +40,9 @@ fun CityWeatherCard(
     Column(
         modifier = modifier
             .border(
-                width = 2.dp, // 邊框粗細
-                color = Color.Gray, // 邊框顏色
-                shape = RoundedCornerShape(8.dp) // 圓角形狀
+                width = 2.dp,
+                color = Color.Gray,
+                shape = RoundedCornerShape(8.dp)
             )
     ) {
         CityItem(
@@ -50,8 +50,7 @@ fun CityWeatherCard(
             city = cityBean.city,
             onClick = { isExpanded = !isExpanded }
         )
-        
-        // 使用 AnimatedVisibility 來控制展開/收起動畫
+
         AnimatedVisibility(
             visible = isExpanded,
             enter = expandVertically(),

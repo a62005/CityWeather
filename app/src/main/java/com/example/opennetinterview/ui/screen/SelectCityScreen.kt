@@ -101,9 +101,9 @@ fun SelectCityScreen(
                     Box(
                         modifier = Modifier
                             .border(
-                                width = 2.dp, // 邊框粗細
-                                color = Color.Gray, // 邊框顏色
-                                shape = RoundedCornerShape(8.dp) // 圓角形狀
+                                width = 2.dp,
+                                color = Color.Gray,
+                                shape = RoundedCornerShape(8.dp)
                             )
                     ) {
                         CityItem(

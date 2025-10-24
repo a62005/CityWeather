@@ -42,7 +42,7 @@ fun WeatherItem(bean: WeatherBean) {
                 .height(40.dp)
         )
 
-        Spacer(modifier = Modifier.width(8.dp)) // 間隔
+        Spacer(modifier = Modifier.width(8.dp))
 
         Row(
             verticalAlignment = Alignment.Top
