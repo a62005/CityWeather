@@ -18,9 +18,9 @@ import com.example.opennetinterview.R
 import com.example.opennetinterview.ui.card.CityWeatherCard
 
 @Composable
-fun MainScreen() {
+fun MainScreen(modifier: Modifier = Modifier) {
     Column(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxSize()
             .padding(10.dp),
         verticalArrangement = Arrangement.SpaceBetween
