@@ -44,9 +44,9 @@ import org.koin.androidx.compose.koinViewModel
 fun SelectCityScreen(
     onBackClick: () -> Unit = {},
     onCityClick: (CityBean) -> Unit = {},
-    viewModel: SelectCityViewModel = koinViewModel()
+    selectCityViewModel: SelectCityViewModel = koinViewModel()
 ) {
-    val citiesList by viewModel.citiesList.collectAsState()
+    val citiesList by selectCityViewModel.citiesList.collectAsState()
 
     Column(
         modifier = Modifier
@@ -109,7 +109,9 @@ fun SelectCityScreen(
                         CityItem(
                             country = city.country,
                             city = city.city,
-                            onClick = { onCityClick(city) }
+                            onClick = {
+                                onCityClick(city)
+                            }
                         )
                     }
 

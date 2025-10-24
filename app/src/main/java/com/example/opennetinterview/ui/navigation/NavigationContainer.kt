@@ -10,9 +10,10 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import com.example.lib_database.entities.CityBean
 import com.example.opennetinterview.ui.screen.MainScreen
 import com.example.opennetinterview.ui.screen.SelectCityScreen
+import com.example.opennetinterview.viewmodel.MainViewModel
+import org.koin.androidx.compose.koinViewModel
 
 enum class Screen {
     Main, SelectCity
@@ -21,6 +22,7 @@ enum class Screen {
 @Composable
 fun NavigationContainer(modifier: Modifier = Modifier) {
     var currentScreen by remember { mutableStateOf(Screen.Main) }
+    val mainViewModel: MainViewModel = koinViewModel()
     
     AnimatedContent(
         targetState = currentScreen,
@@ -39,6 +41,7 @@ fun NavigationContainer(modifier: Modifier = Modifier) {
         when (screen) {
             Screen.Main -> {
                 MainScreen(
+                    mainViewModel = mainViewModel,
                     onSelectCityClick = {
                         currentScreen = Screen.SelectCity
                     }
@@ -50,6 +53,7 @@ fun NavigationContainer(modifier: Modifier = Modifier) {
                         currentScreen = Screen.Main
                     },
                     onCityClick = { city ->
+                        mainViewModel.setWeatherData(city.country)
                         currentScreen = Screen.Main
                     }
                 )
