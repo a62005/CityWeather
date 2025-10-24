@@ -1,11 +1,19 @@
 package com.example.opennetinterview.viewmodel
 
 import androidx.lifecycle.ViewModel
+import com.example.lib_database.entities.CityBean
+import com.example.lib_database.entities.WeatherBean
+import com.example.lib_database.entities.WeekWeatherBean
 import com.example.opennetinterview.repo.MainRepository
+import kotlinx.coroutines.flow.Flow
 
 class MainViewModel(private val repo: MainRepository): ViewModel() {
 
-    fun clearData() {
-        repo.clearData()
+    val city: Flow<CityBean> = repo.observeCity
+    val todayWeather: Flow<WeatherBean> = repo.observeTodayWeather  
+    val weekWeather: Flow<List<WeekWeatherBean>> = repo.observeWeekWeather
+
+    fun setWeatherData(country: String) {
+        repo.setWeatherData(country)
     }
 }

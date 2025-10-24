@@ -22,7 +22,7 @@ fun WeekWeatherItem(bean: WeekWeatherBean) {
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text(
-            text = bean.weekOfDay,
+            text = bean.weekday,
             fontSize = 12.sp,
             textAlign = TextAlign.Center,
             lineHeight = 14.sp
@@ -54,7 +54,7 @@ fun WeekWeatherItemPreview() {
     OpenNetInterviewTheme {
         WeekWeatherItem(
             WeekWeatherBean(
-                weekOfDay = "Mon",
+                weekday = "Mon",
                 weatherUrl = "https://cdn.weatherapi.com/weather/64x64/day/308.png",
                 changeOfRain = 45,
                 tempMin = 18,

@@ -95,9 +95,8 @@ fun WeatherItemPreview() {
             WeatherBean(
                 country = "Taiwan",
                 city = "Taipei",
-                timeInMillis = System.currentTimeMillis(),
                 date = "10/24",
-                weekOfDay = "Friday",
+                weekday = "Friday",
                 timeOfDay = "3:00 PM",
                 weather = "Sunny",
                 weatherUrl = "https://cdn.weatherapi.com/weather/64x64/day/308.png",
@@ -110,7 +109,7 @@ fun WeatherItemPreview() {
             ),
             weekWeatherList = List(7) {
                 WeekWeatherBean(
-                    weekOfDay = "Fri",
+                    weekday = "Fri",
                     weatherUrl = "https://cdn.weatherapi.com/weather/64x64/day/308.png",
                     changeOfRain = 10,
                     tempMin = 25,

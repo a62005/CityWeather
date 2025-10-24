@@ -2,13 +2,12 @@ package com.example.lib_database.entities
 
 import androidx.room.Entity
 
-@Entity(primaryKeys = ["country", "city", "timeInMillis"])
+@Entity(primaryKeys = ["country", "city"])
 data class WeatherBean(
     val country: String,
     val city: String,
-    val timeInMillis: Long,
     val date: String,
-    val weekOfDay: String,
+    val weekday: String,
     val timeOfDay: String?,
     val weather: String,
     val weatherUrl: String,
@@ -21,7 +20,7 @@ data class WeatherBean(
 )
 
 data class WeekWeatherBean(
-    val weekOfDay: String,
+    val weekday: String,
     val weatherUrl: String,
     val changeOfRain: Int,
     val tempMin: Int,
