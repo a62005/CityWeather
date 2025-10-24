@@ -18,7 +18,10 @@ import com.example.opennetinterview.R
 import com.example.opennetinterview.ui.card.CityWeatherCard
 
 @Composable
-fun MainScreen(modifier: Modifier = Modifier) {
+fun MainScreen(
+    modifier: Modifier = Modifier,
+    onSelectCityClick: () -> Unit = {}
+) {
     Column(
         modifier = modifier
             .fillMaxSize()
@@ -61,9 +64,7 @@ fun MainScreen(modifier: Modifier = Modifier) {
         )
 
         Button(
-            onClick = {
-
-            },
+            onClick = onSelectCityClick,
             modifier = Modifier.fillMaxWidth()
         ) {
             Text(stringResource(
