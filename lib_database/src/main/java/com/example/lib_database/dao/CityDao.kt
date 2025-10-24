@@ -3,6 +3,7 @@ package com.example.lib_database.dao
 import androidx.room.Dao
 import androidx.room.Query
 import com.example.lib_database.entities.CityBean
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 abstract class CityDao : BaseDao<CityBean>() {
@@ -12,5 +13,8 @@ abstract class CityDao : BaseDao<CityBean>() {
 
     @Query("SELECT COUNT(*) FROM CityBean")
     abstract suspend fun getSize(): Int
+
+    @Query("SELECT * FROM CityBean")
+    abstract fun observeCity(): Flow<List<CityBean>>
 
 }
