@@ -8,8 +8,8 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 abstract class CityDao : BaseDao<CityBean>() {
 
-    @Query("SELECT * FROM CityBean WHERE country = :country")
-    abstract suspend fun getCityByCountry(country: String): CityBean?
+    @Query("SELECT * FROM CityBean WHERE countryCode = :countryCode")
+    abstract suspend fun getCityByCountryCode(countryCode: String): CityBean?
 
     @Query("SELECT * FROM CityBean WHERE countryCode = :countryCode LIMIT 1")
     abstract fun observeCityByCountryCode(countryCode: String): Flow<CityBean?>
@@ -19,5 +19,9 @@ abstract class CityDao : BaseDao<CityBean>() {
 
     @Query("SELECT * FROM CityBean ORDER BY countryCode")
     abstract fun observeCity(): Flow<List<CityBean>>
+
+    suspend fun isEmpty(): Boolean {
+        return getSize() == 0
+    }
 
 }

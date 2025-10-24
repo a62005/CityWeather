@@ -13,7 +13,7 @@ class MainViewModel(private val repo: MainRepository): ViewModel() {
     val todayWeather: Flow<WeatherBean> = repo.observeTodayWeather  
     val weekWeather: Flow<List<WeekWeatherBean>> = repo.observeWeekWeather
 
-    fun setWeatherData(country: String) {
-        repo.setWeatherData(country)
+    fun setWeatherData(countryCode: String) {
+        repo.setWeatherData(countryCode)
     }
 }

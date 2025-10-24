@@ -26,7 +26,7 @@ class MainRepository(
             val defaultCountry = Locale.getDefault().country
             cityDao.observeCityByCountryCode(defaultCountry).collect { cityBean ->
                 cityBean?.let {
-                    setWeatherData(it.country)
+                    setWeatherData(it.countryCode)
                     initJob?.cancel()
                     initJob = null
                 }
@@ -43,9 +43,9 @@ class MainRepository(
     private val _observeWeekWeather = MutableSharedFlow<List<WeekWeatherBean>>()
     val observeWeekWeather: Flow<List<WeekWeatherBean>> = _observeWeekWeather
 
-    fun setWeatherData(country: String) {
+    fun setWeatherData(countryCode: String) {
         ioScope.launch {
-            cityDao.getCityByCountry(country)?.let { cityBean ->
+            cityDao.getCityByCountryCode(countryCode)?.let { cityBean ->
                 networkManager.weatherApiService.getForecastWeather("${cityBean.latitude},${cityBean.longitude}")
                     .let { response ->
                         if (response.isSuccessful) {

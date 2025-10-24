@@ -53,7 +53,7 @@ fun NavigationContainer(modifier: Modifier = Modifier) {
                         currentScreen = Screen.Main
                     },
                     onCityClick = { city ->
-                        mainViewModel.setWeatherData(city.country)
+                        mainViewModel.setWeatherData(city.countryCode)
                         currentScreen = Screen.Main
                     }
                 )
