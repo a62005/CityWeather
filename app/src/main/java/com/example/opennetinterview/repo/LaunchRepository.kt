@@ -78,7 +78,7 @@ class LaunchRepository(
 
     private fun getWeather(country: String, city: String, latitude: Double, longitude: Double) {
         ioScope.launch {
-            val response = networkManager.weatherApiService.getWeather(latitude, longitude)
+            val response = networkManager.weatherApiService.getForecastWeather("$latitude,$longitude")
             Log.d(
                 TAG,
                 "Get Weather Response Successful: ${response.isSuccessful} ${response.body()}"
