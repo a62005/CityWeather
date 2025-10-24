@@ -2,9 +2,7 @@ package com.example.opennetinterview.repo
 
 import android.util.Log
 import com.example.lib_database.dao.CityDao
-import com.example.lib_database.dao.WeatherDao
 import com.example.lib_database.entities.CityBean
-import com.example.lib_database.entities.WeatherBean
 import com.example.lib_network.NetworkManager
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
@@ -14,8 +12,7 @@ import java.util.Locale
 class LaunchRepository(
     private val ioScope: CoroutineScope,
     private val networkManager: NetworkManager,
-    private val cityDao: CityDao,
-    private val weatherDao: WeatherDao
+    private val cityDao: CityDao
 ) {
 
     companion object {
@@ -24,16 +21,14 @@ class LaunchRepository(
 
     fun init() {
         ioScope.launch {
-            initDefaultCountryAndWeather()
+            initDefaultCountry()
             initAllCountries()
         }
     }
 
-    private suspend fun initDefaultCountryAndWeather() {
+    private suspend fun initDefaultCountry() {
         val defaultCountry = Locale.getDefault().country
-        (cityDao.getCityByCountry(defaultCountry) ?: getCountry(defaultCountry))?.let { cityBean ->
-            getWeather(cityBean.country, cityBean.city, cityBean.latitude, cityBean.longitude)
-        }
+        (cityDao.getCityByCountry(defaultCountry) ?: getCountry(defaultCountry))
     }
 
     private suspend fun initAllCountries() {
@@ -45,7 +40,7 @@ class LaunchRepository(
 
     private suspend fun setAllCountries(countries: List<String>) {
         // TODO : Limit to 10 countries for testing purposes
-        val countries = Locale.getISOCountries().take(3)
+        val countries = countries.take(3)
         countries.forEach { code ->
             getCountry(code)
         }
@@ -75,17 +70,4 @@ class LaunchRepository(
                 null
             }
         }
-
-    private fun getWeather(country: String, city: String, latitude: Double, longitude: Double) {
-        ioScope.launch {
-            val response = networkManager.weatherApiService.getForecastWeather("$latitude,$longitude")
-            Log.d(
-                TAG,
-                "Get Weather Response Successful: ${response.isSuccessful} ${response.body()}"
-            )
-            if (response.isSuccessful) {
-
-            }
-        }
-    }
 }
