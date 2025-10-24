@@ -19,7 +19,7 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "OpenNetInterview"
+rootProject.name = "CityWeather"
 include(":app")
 include(":lib_database")
 include(":lib_network")

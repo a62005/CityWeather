@@ -5,11 +5,11 @@ plugins {
 }
 
 android {
-    namespace = "com.example.opennetinterview"
+    namespace = "com.example.cityweather"
     compileSdk = 36
 
     defaultConfig {
-        applicationId = "com.example.opennetinterview"
+        applicationId = "com.example.cityweather"
         minSdk = 24
         targetSdk = 36
         versionCode = 1

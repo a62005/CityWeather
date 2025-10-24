@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">OpenNetInterview</string>
+    <string name="app_name">City Weather</string>
     
     <!-- Weather Item -->
     <string name="chance_of_rain">Rain: %d%%</string>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="Theme.OpenNetInterview" parent="android:Theme.Material.Light.NoActionBar" />
+    <style name="Theme.CityWeather" parent="android:Theme.Material.Light.NoActionBar" />
 </resources>
