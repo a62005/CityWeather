@@ -22,8 +22,8 @@ class NetworkTest {
     @Test
     fun insert() {
         runBlocking {
-            getTWCountry()
-//            getTWWeather()
+//            getTWCountry()
+            getTWWeather()
         }
     }
 
@@ -39,7 +39,7 @@ class NetworkTest {
     }
 
     suspend fun getTWWeather() {
-        val weatherResp = networkManager.weatherApiService.getWeather(25.03, 121.52)
+        val weatherResp = networkManager.weatherApiService.getForecastWeather("25.03,121.52", 2)
         println("Weather Response: ${weatherResp.isSuccessful}, Body: ${weatherResp.body()}")
     }
 }

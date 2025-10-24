@@ -8,9 +8,9 @@ import retrofit2.http.Query
 
 interface WeatherApiService {
     
-    @POST("data/2.5/weather?appid=${Config.WEATHER_API_KEY}")
-    suspend fun getWeather(
-        @Query("lat") latitude: Double,
-        @Query("lon") longitude: Double
+    @POST("forecast.json?alerts=no&key=${Config.WEATHER_API_KEY}")
+    suspend fun getForecastWeather(
+        @Query("q") query: String, // q=lat,lon or city name
+        @Query("days") days: Int = 7
     ): Response<WeatherDataModel>
 }
