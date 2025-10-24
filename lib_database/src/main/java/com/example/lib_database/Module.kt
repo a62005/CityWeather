@@ -5,6 +5,7 @@ import org.koin.dsl.module
 
 internal val daoModule = module {
     factory { get<ONDataBase>().cityDao() }
+    factory { get<ONDataBase>().weatherDao() }
 }
 
 internal val databaseModule: List<Module> = listOf(module {

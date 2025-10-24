@@ -4,6 +4,7 @@ import androidx.room.Entity
 
 @Entity(primaryKeys = ["country", "city"])
 data class CityBean(
+    val countryCode: String,
     val country: String,
     val city: String,
     val latitude: Double,

@@ -5,10 +5,15 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.example.lib_database.dao.CityDao
+import com.example.lib_database.dao.WeatherDao
 import com.example.lib_database.entities.CityBean
+import com.example.lib_database.entities.WeatherBean
 
 @Database(
-    entities = [CityBean::class],
+    entities = [
+        CityBean::class,
+        WeatherBean::class
+    ],
     version = 1,
     exportSchema = false
 )
@@ -35,4 +40,5 @@ abstract class ONDataBase : RoomDatabase() {
     }
 
     abstract fun cityDao(): CityDao
+    abstract fun weatherDao(): WeatherDao
 }
