@@ -84,20 +84,7 @@ class LaunchRepository(
                 "Get Weather Response Successful: ${response.isSuccessful} ${response.body()}"
             )
             if (response.isSuccessful) {
-                response.body()?.let { weather ->
-                    WeatherBean(
-                        country = country,
-                        city = city,
-                        weather = weather.weatherMain,
-                        temp = weather.temp,
-                        tempMin = weather.tempMin,
-                        tempMax = weather.tempMax,
-                        pressure = weather.pressure,
-                        humidity = weather.humidity
-                    ).apply {
-                        weatherDao.insert(this)
-                    }
-                }
+
             }
         }
     }
