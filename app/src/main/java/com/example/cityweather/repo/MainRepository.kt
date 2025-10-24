@@ -34,13 +34,13 @@ class MainRepository(
         }
     }
 
-    private val _observeCity = MutableSharedFlow<CityBean>()
+    private val _observeCity = MutableSharedFlow<CityBean>(replay = 1, extraBufferCapacity = 1)
     val observeCity: Flow<CityBean> = _observeCity
 
-    private val _observeTodayWeather = MutableSharedFlow<WeatherBean>()
+    private val _observeTodayWeather = MutableSharedFlow<WeatherBean>(replay = 1, extraBufferCapacity = 1)
     val observeTodayWeather: Flow<WeatherBean> = _observeTodayWeather
 
-    private val _observeWeekWeather = MutableSharedFlow<List<WeekWeatherBean>>()
+    private val _observeWeekWeather = MutableSharedFlow<List<WeekWeatherBean>>(replay = 1, extraBufferCapacity = 1)
     val observeWeekWeather: Flow<List<WeekWeatherBean>> = _observeWeekWeather
 
     fun setWeatherData(countryCode: String) {
