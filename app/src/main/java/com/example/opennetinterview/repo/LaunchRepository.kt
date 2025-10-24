@@ -10,7 +10,6 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.util.Locale
-import kotlin.collections.firstOrNull
 
 class LaunchRepository(
     private val ioScope: CoroutineScope,
@@ -26,9 +25,7 @@ class LaunchRepository(
     fun init() {
         ioScope.launch {
             initDefaultCountryAndWeather()
-            if (cityDao.isEmpty()) {
-                setAllCountries()
-            }
+            initAllCountries()
         }
     }
 
@@ -39,7 +36,14 @@ class LaunchRepository(
         }
     }
 
-    private suspend fun setAllCountries() {
+    private suspend fun initAllCountries() {
+        val countries = Locale.getISOCountries()
+        if (cityDao.getSize() != countries.size) {
+            setAllCountries(countries.toList())
+        }
+    }
+
+    private suspend fun setAllCountries(countries: List<String>) {
         // TODO : Limit to 10 countries for testing purposes
         val countries = Locale.getISOCountries().take(3)
         countries.forEach { code ->
@@ -47,30 +51,38 @@ class LaunchRepository(
         }
     }
 
-    private suspend fun getCountry(country: String): CityBean? = withContext(ioScope.coroutineContext) {
-        val response = networkManager.countryApiService.getCountryInfo(country)
-        Log.d(TAG, "Get Country Response Successful: ${response.isSuccessful} ${response.body()}")
-        return@withContext if (response.isSuccessful) {
-            response.body()?.firstOrNull()?.let { country ->
-                CityBean(
-                    countryCode = country.countryCode,
-                    country = country.country,
-                    city = country.city,
-                    latitude = country.latitude,
-                    longitude = country.longitude
-                ).apply {
-                    cityDao.insert(this)
+    private suspend fun getCountry(country: String): CityBean? =
+        withContext(kotlinx.coroutines.Dispatchers.IO) {
+            val response = networkManager.countryApiService.getCountryInfo(country)
+            return@withContext if (response.isSuccessful) {
+                val countries = response.body()
+                Log.d(TAG, "Response body size: ${countries?.size}")
+                countries?.firstOrNull()?.let { countryData ->
+                    Log.d(TAG, "Country data: ${countryData.country}, ${countryData.city}")
+                    CityBean(
+                        countryCode = countryData.countryCode,
+                        country = countryData.country,
+                        city = countryData.city,
+                        latitude = countryData.latitude,
+                        longitude = countryData.longitude
+                    ).apply {
+                        cityDao.insert(this)
+                        Log.d(TAG, "Successfully inserted data for $country")
+                    }
                 }
+            } else {
+                Log.e(TAG, "API call failed for $country: ${response.code()}")
+                null
             }
-        } else {
-            null
         }
-    }
 
     private fun getWeather(country: String, city: String, latitude: Double, longitude: Double) {
         ioScope.launch {
             val response = networkManager.weatherApiService.getWeather(latitude, longitude)
-            Log.d(TAG, "Get Weather Response Successful: ${response.isSuccessful} ${response.body()}")
+            Log.d(
+                TAG,
+                "Get Weather Response Successful: ${response.isSuccessful} ${response.body()}"
+            )
             if (response.isSuccessful) {
                 response.body()?.let { weather ->
                     WeatherBean(

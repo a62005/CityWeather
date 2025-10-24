@@ -8,7 +8,6 @@ import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.koin.java.KoinJavaComponent.inject
-import kotlin.getValue
 
 @RunWith(AndroidJUnit4::class)
 @LargeTest
@@ -23,21 +22,24 @@ class NetworkTest {
     @Test
     fun insert() {
         runBlocking {
-            val countryResp = networkManager.countryApiService.getCountryInfo("TW")
-            val data = countryResp.body()?.firstOrNull()
-            println("Country Response: ${countryResp.isSuccessful}, Body: $data")
-
-            data?.let {
-                val weatherResp = networkManager.weatherApiService.getWeather(it.latitude, it.longitude)
-                println("Weather Response: ${weatherResp.isSuccessful}, Body: ${weatherResp.body()}")
-            } ?: run {
-                println("No country data found for TW")
-            }
+            getTWCountry()
+//            getTWWeather()
         }
     }
 
     @After
     fun finish() {
         println("Done")
+    }
+
+    suspend fun getTWCountry() {
+        val countryResp = networkManager.countryApiService.getCountryInfo("TW")
+        val data = countryResp.body()?.firstOrNull()
+        println("Country Response: ${countryResp.isSuccessful}, Body: $data")
+    }
+
+    suspend fun getTWWeather() {
+        val weatherResp = networkManager.weatherApiService.getWeather(25.03, 121.52)
+        println("Weather Response: ${weatherResp.isSuccessful}, Body: ${weatherResp.body()}")
     }
 }

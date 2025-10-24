@@ -13,7 +13,4 @@ abstract class CityDao : BaseDao<CityBean>() {
     @Query("SELECT COUNT(*) FROM CityBean")
     abstract suspend fun getSize(): Int
 
-    suspend fun isEmpty(): Boolean {
-        return getSize() == 0
-    }
 }
