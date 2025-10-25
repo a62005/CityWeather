@@ -13,9 +13,9 @@ data class CountryDataModel(
     val capitalInfo: CapitalInfo?
 ) {
     val country: String get() = nameWrapper.common
-    val city: String get() = capital?.firstOrNull() ?: ""
-    val latitude: Double get() = capitalInfo?.latlng?.getOrNull(0) ?: 0.0
-    val longitude: Double get() = capitalInfo?.latlng?.getOrNull(1) ?: 0.0
+    val city: String? get() = capital?.firstOrNull()
+    val latitude: Double? get() = capitalInfo?.latlng?.getOrNull(0)
+    val longitude: Double? get() = capitalInfo?.latlng?.getOrNull(1)
 }
 
 data class NameWrapper(

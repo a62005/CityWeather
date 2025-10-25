@@ -4,6 +4,7 @@ import android.util.Log
 import com.example.lib_database.dao.CityDao
 import com.example.lib_database.entities.CityBean
 import com.example.lib_network.NetworkManager
+import com.example.lib_network.datamodel.CountryDataModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import java.util.Locale
@@ -40,19 +41,7 @@ class LaunchRepository(
                 val countriesMap = countries.associateBy { it.countryCode }
                 isoCountries.forEach { countryCode ->
                     countriesMap[countryCode]?.let { countryData ->
-                        if (!countryData.capital.isNullOrEmpty() && countryData.capitalInfo != null) {
-                            CityBean(
-                                id = (countryCode[0].code shl 8) or countryCode[1].code,
-                                countryCode = countryData.countryCode,
-                                country = countryData.country,
-                                city = countryData.city,
-                                latitude = countryData.latitude,
-                                longitude = countryData.longitude
-                            ).apply {
-                                cityDao.insert(this)
-                                Log.d(TAG, "Successfully inserted data for $country")
-                            }
-                        }
+                        saveCityBean(countryData)
                     }
                 }
             }
@@ -69,18 +58,24 @@ class LaunchRepository(
             Log.d(TAG, "Response body size: ${countries?.size}")
             countries?.firstOrNull()?.let { countryData ->
                 Log.d(TAG, "Country data: ${countryData.country}, ${countryData.city}")
-                if (!countryData.capital.isNullOrEmpty() && countryData.capitalInfo != null) {
-                    CityBean(
-                        id = (countryCode[0].code shl 8) or countryCode[1].code,
-                        countryCode = countryData.countryCode,
-                        country = countryData.country,
-                        city = countryData.city,
-                        latitude = countryData.latitude,
-                        longitude = countryData.longitude
-                    ).apply {
-                        cityDao.insert(this)
-                        Log.d(TAG, "Successfully inserted data for $country")
-                    }
+                saveCityBean(countryData)
+            }
+        }
+    }
+
+    private fun saveCityBean(dataModel: CountryDataModel) {
+        ioScope.launch {
+            if (!dataModel.capital.isNullOrEmpty() && dataModel.capitalInfo != null && dataModel.latitude != null && dataModel.longitude != null && dataModel.city != null) {
+                CityBean(
+                    id = (dataModel.countryCode[0].code shl 8) or dataModel.countryCode[1].code,
+                    countryCode = dataModel.countryCode,
+                    country = dataModel.country,
+                    city = dataModel.city!!,
+                    latitude = dataModel.latitude!!,
+                    longitude = dataModel.longitude!!
+                ).apply {
+                    cityDao.insert(this)
+                    Log.d(TAG, "Successfully inserted data for $country")
                 }
             }
         }
