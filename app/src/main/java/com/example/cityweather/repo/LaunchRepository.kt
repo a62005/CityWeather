@@ -1,6 +1,7 @@
 package com.example.cityweather.repo
 
 import android.util.Log
+import com.example.cityweather.BuildConfig
 import com.example.lib_database.dao.CityDao
 import com.example.lib_database.entities.CityBean
 import com.example.lib_network.NetworkManager
@@ -33,8 +34,11 @@ class LaunchRepository(
     }
 
     private suspend fun initAllCountries() {
-        // TODO test with limited countries
-        val countries = Locale.getISOCountries().take(20)
+        val countries = if (BuildConfig.DEBUG) {
+            Locale.getISOCountries().take(20)
+        } else {
+            Locale.getISOCountries().toList()
+        }
         countries.forEach { code ->
             setCountry(code)
         }
