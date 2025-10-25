@@ -5,6 +5,10 @@ import androidx.compose.animation.slideInHorizontally
 import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.animation.togetherWith
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import com.example.cityweather.ui.screen.MainScreen
 import com.example.cityweather.ui.screen.SelectCityScreen
@@ -17,18 +21,18 @@ enum class Screen {
 
 @Composable
 fun NavigationContainer(modifier: Modifier = Modifier) {
-    val navigationManager = rememberNavigationManager(Screen.Main)
+    var currentScreen by remember { mutableStateOf(Screen.Main) }
     val mainViewModel: MainViewModel = koinViewModel()
     
     AnimatedContent(
-        targetState = navigationManager.currentScreen,
+        targetState = currentScreen,
         transitionSpec = {
-            if (navigationManager.isBackNavigation) {
-                slideInHorizontally(initialOffsetX = { -it }) togetherWith
-                slideOutHorizontally(targetOffsetX = { it })
-            } else {
+            if (targetState == Screen.SelectCity) {
                 slideInHorizontally(initialOffsetX = { it }) togetherWith
                 slideOutHorizontally(targetOffsetX = { -it })
+            } else {
+                slideInHorizontally(initialOffsetX = { -it }) togetherWith
+                slideOutHorizontally(targetOffsetX = { it })
             }
         },
         modifier = modifier,
@@ -39,18 +43,18 @@ fun NavigationContainer(modifier: Modifier = Modifier) {
                 MainScreen(
                     mainViewModel = mainViewModel,
                     onSelectCityClick = {
-                        navigationManager.navigateTo(Screen.SelectCity)
+                        currentScreen = Screen.SelectCity
                     }
                 )
             }
             Screen.SelectCity -> {
                 SelectCityScreen(
                     onBackClick = {
-                        navigationManager.navigateBack()
+                        currentScreen = Screen.Main
                     },
                     onCityClick = { city ->
                         mainViewModel.setWeatherData(city.countryCode)
-                        navigationManager.navigateBack()
+                        currentScreen = Screen.Main
                     }
                 )
             }
