@@ -9,4 +9,7 @@ interface CountryApiService {
     
     @GET("v3.1/alpha/{country}")
     suspend fun getCountryInfo(@Path("country") countryCode: String): Response<List<CountryDataModel>>
+
+    @GET("v3.1/all?fields=name,capitalInfo,cca2,capital")
+    suspend fun getAllCountriesInfo(): Response<List<CountryDataModel>>
 }

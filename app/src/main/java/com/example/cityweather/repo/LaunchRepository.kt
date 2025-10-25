@@ -1,7 +1,6 @@
 package com.example.cityweather.repo
 
 import android.util.Log
-import com.example.cityweather.BuildConfig
 import com.example.lib_database.dao.CityDao
 import com.example.lib_database.entities.CityBean
 import com.example.lib_network.NetworkManager
@@ -34,13 +33,29 @@ class LaunchRepository(
     }
 
     private suspend fun initAllCountries() {
-        val countries = if (BuildConfig.DEBUG) {
-            Locale.getISOCountries().take(20)
-        } else {
-            Locale.getISOCountries().toList()
-        }
-        countries.forEach { code ->
-            setCountry(code)
+        val isoCountries = Locale.getISOCountries().toList()
+        val response = networkManager.countryApiService.getAllCountriesInfo()
+        if (response.isSuccessful) {
+            response.body()?.let { countries ->
+                val countriesMap = countries.associateBy { it.countryCode }
+                isoCountries.forEach { countryCode ->
+                    countriesMap[countryCode]?.let { countryData ->
+                        if (!countryData.capital.isNullOrEmpty() && countryData.capitalInfo != null) {
+                            CityBean(
+                                id = (countryCode[0].code shl 8) or countryCode[1].code,
+                                countryCode = countryData.countryCode,
+                                country = countryData.country,
+                                city = countryData.city,
+                                latitude = countryData.latitude,
+                                longitude = countryData.longitude
+                            ).apply {
+                                cityDao.insert(this)
+                                Log.d(TAG, "Successfully inserted data for $country")
+                            }
+                        }
+                    }
+                }
+            }
         }
     }
 
@@ -70,4 +85,5 @@ class LaunchRepository(
             }
         }
     }
+
 }
