@@ -28,8 +28,7 @@ fun MainScreen(
     onSelectCityClick: () -> Unit = {}
 ) {
     val city by mainViewModel.city.collectAsStateWithLifecycle(initialValue = null)
-    val todayWeather by mainViewModel.todayWeather.collectAsStateWithLifecycle(initialValue = null)
-    val weekWeather by mainViewModel.weekWeather.collectAsStateWithLifecycle(initialValue = emptyList())
+    val weather by mainViewModel.weather.collectAsStateWithLifecycle(initialValue = null)
 
     Column(
         modifier = modifier
@@ -37,11 +36,11 @@ fun MainScreen(
             .padding(10.dp),
         verticalArrangement = Arrangement.SpaceBetween
     ) {
-        if (city != null && todayWeather != null) {
+        if (city != null && weather != null) {
             CityWeatherCard(
                 cityBean = city!!,
-                weatherBean = todayWeather!!,
-                weekWeatherList = weekWeather
+                currentWeatherBean = weather!!.currentWeather,
+                weekWeatherList = weather!!.weekWeather
             )
         } else {
             Box(

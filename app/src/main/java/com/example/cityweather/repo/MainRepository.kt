@@ -6,6 +6,7 @@ import com.example.lib_database.entities.WeatherBean
 import com.example.lib_database.entities.WeekWeatherBean
 import com.example.lib_network.NetworkManager
 import com.example.cityweather.utils.TimeUtils
+import com.example.lib_database.entities.CurrentWeatherBean
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.Flow
@@ -37,11 +38,8 @@ class MainRepository(
     private val _observeCity = MutableSharedFlow<CityBean>(replay = 1, extraBufferCapacity = 1)
     val observeCity: Flow<CityBean> = _observeCity
 
-    private val _observeTodayWeather = MutableSharedFlow<WeatherBean>(replay = 1, extraBufferCapacity = 1)
-    val observeTodayWeather: Flow<WeatherBean> = _observeTodayWeather
-
-    private val _observeWeekWeather = MutableSharedFlow<List<WeekWeatherBean>>(replay = 1, extraBufferCapacity = 1)
-    val observeWeekWeather: Flow<List<WeekWeatherBean>> = _observeWeekWeather
+    private val _observeWeather = MutableSharedFlow<WeatherBean>(replay = 1, extraBufferCapacity = 1)
+    val observeWeather: Flow<WeatherBean> = _observeWeather
 
     fun setWeatherData(countryCode: String) {
         ioScope.launch {
@@ -51,9 +49,8 @@ class MainRepository(
                         if (response.isSuccessful) {
                             response.body()?.let { weatherData ->
                                 val todayWeatherInfo = weatherData.forecast.forecastDays.first()
-                                val todayWeather = WeatherBean(
-                                    country = cityBean.country,
-                                    city = cityBean.city,
+                                val todayWeather = CurrentWeatherBean(
+                                    id = cityBean.id,
                                     date = TimeUtils.formatToMonthDay(todayWeatherInfo.date),
                                     weekday = TimeUtils.formatToWeekday(todayWeatherInfo.date),
                                     timeOfDay = weatherData.currentWeather.lastUpdatedTime.split(" ")
@@ -70,6 +67,7 @@ class MainRepository(
                                 val forecastWeatherInfo =
                                     weatherData.forecast.forecastDays.drop(1).map {
                                         WeekWeatherBean(
+                                            id = cityBean.id,
                                             weekday = TimeUtils.formatToWeekday(it.date),
                                             weatherUrl = "http://${it.dayInfo.condition.weatherUrl}",
                                             changeOfRain = it.dayInfo.changeOfRain,
@@ -77,9 +75,13 @@ class MainRepository(
                                             tempMax = it.dayInfo.tempMax.toInt()
                                         )
                                     }
+                                val weatherBean = WeatherBean(
+                                    id = cityBean.id,
+                                    currentWeather = todayWeather,
+                                    weekWeather = forecastWeatherInfo
+                                )
                                 _observeCity.emit(cityBean)
-                                _observeTodayWeather.emit(todayWeather)
-                                _observeWeekWeather.emit(forecastWeatherInfo)
+                                _observeWeather.emit(weatherBean)
                             }
                         }
                     }

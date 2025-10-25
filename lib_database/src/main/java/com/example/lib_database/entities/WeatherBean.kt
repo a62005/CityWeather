@@ -1,11 +1,13 @@
 package com.example.lib_database.entities
 
-import androidx.room.Entity
-
-@Entity(primaryKeys = ["country", "city"])
 data class WeatherBean(
-    val country: String,
-    val city: String,
+    val id: Int,
+    val currentWeather: CurrentWeatherBean,
+    val weekWeather: List<WeekWeatherBean>
+)
+
+data class CurrentWeatherBean(
+    val id: Int,
     val date: String,
     val weekday: String,
     val timeOfDay: String?,
@@ -20,6 +22,7 @@ data class WeatherBean(
 )
 
 data class WeekWeatherBean(
+    val id: Int,
     val weekday: String,
     val weatherUrl: String,
     val changeOfRain: Int,

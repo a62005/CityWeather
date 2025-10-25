@@ -54,6 +54,7 @@ fun WeekWeatherItemPreview() {
     CityWeatherTheme {
         WeekWeatherItem(
             WeekWeatherBean(
+                id = 0,
                 weekday = "Mon",
                 weatherUrl = "https://cdn.weatherapi.com/weather/64x64/day/308.png",
                 changeOfRain = 45,

@@ -20,12 +20,12 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.rememberAsyncImagePainter
-import com.example.lib_database.entities.WeatherBean
 import com.example.cityweather.R
 import com.example.cityweather.ui.theme.CityWeatherTheme
+import com.example.lib_database.entities.CurrentWeatherBean
 
 @Composable
-fun WeatherItem(bean: WeatherBean) {
+fun WeatherItem(bean: CurrentWeatherBean) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -117,9 +117,8 @@ fun WeatherItem(bean: WeatherBean) {
 fun WeatherItemPreview() {
     CityWeatherTheme {
         WeatherItem(
-            WeatherBean(
-                country = "Taiwan",
-                city = "Taipei",
+            CurrentWeatherBean(
+                id = 0,
                 date = "10/24",
                 weekday = "Friday",
                 timeOfDay = "3:00 PM",

@@ -52,6 +52,7 @@ class LaunchRepository(
                 Log.d(TAG, "Country data: ${countryData.country}, ${countryData.city}")
                 if (!countryData.capital.isNullOrEmpty() && countryData.capitalInfo != null) {
                     CityBean(
+                        id = (countryCode[0].code shl 8) or countryCode[1].code,
                         countryCode = countryData.countryCode,
                         country = countryData.country,
                         city = countryData.city,

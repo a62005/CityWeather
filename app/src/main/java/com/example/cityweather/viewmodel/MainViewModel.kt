@@ -10,8 +10,7 @@ import kotlinx.coroutines.flow.Flow
 class MainViewModel(private val repo: MainRepository): ViewModel() {
 
     val city: Flow<CityBean> = repo.observeCity
-    val todayWeather: Flow<WeatherBean> = repo.observeTodayWeather  
-    val weekWeather: Flow<List<WeekWeatherBean>> = repo.observeWeekWeather
+    val weather: Flow<WeatherBean> = repo.observeWeather
 
     fun setWeatherData(countryCode: String) {
         repo.setWeatherData(countryCode)

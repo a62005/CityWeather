@@ -21,17 +21,17 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.lib_database.entities.CityBean
-import com.example.lib_database.entities.WeatherBean
 import com.example.lib_database.entities.WeekWeatherBean
 import com.example.cityweather.ui.item.CityItem
 import com.example.cityweather.ui.item.WeatherItem
 import com.example.cityweather.ui.item.WeekWeatherItem
 import com.example.cityweather.ui.theme.CityWeatherTheme
+import com.example.lib_database.entities.CurrentWeatherBean
 
 @Composable
 fun CityWeatherCard(
-    cityBean: CityBean, 
-    weatherBean: WeatherBean, 
+    cityBean: CityBean,
+    currentWeatherBean: CurrentWeatherBean,
     weekWeatherList: List<WeekWeatherBean>,
     modifier: Modifier = Modifier
 ) {
@@ -57,7 +57,7 @@ fun CityWeatherCard(
             exit = shrinkVertically()
         ) {
             Column {
-                WeatherItem(weatherBean)
+                WeatherItem(currentWeatherBean)
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -84,16 +84,16 @@ fun CityWeatherCard(
 fun WeatherItemPreview() {
     CityWeatherTheme {
         CityWeatherCard(
-            CityBean(
+            cityBean = CityBean(
+                id = 0,
                 countryCode = "TW",
                 country = "Taiwan",
                 city = "Taipei",
                 latitude = 25.0330,
                 longitude = 121.5654
             ),
-            WeatherBean(
-                country = "Taiwan",
-                city = "Taipei",
+            currentWeatherBean = CurrentWeatherBean(
+                id = 0,
                 date = "10/24",
                 weekday = "Friday",
                 timeOfDay = "3:00 PM",
@@ -108,6 +108,7 @@ fun WeatherItemPreview() {
             ),
             weekWeatherList = List(7) {
                 WeekWeatherBean(
+                    id = 0,
                     weekday = "Fri",
                     weatherUrl = "https://cdn.weatherapi.com/weather/64x64/day/308.png",
                     changeOfRain = 10,
