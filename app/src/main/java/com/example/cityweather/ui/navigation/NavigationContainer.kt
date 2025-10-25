@@ -5,6 +5,7 @@ import androidx.compose.animation.slideInHorizontally
 import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.animation.togetherWith
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -23,6 +24,8 @@ enum class Screen {
 fun NavigationContainer(modifier: Modifier = Modifier) {
     var currentScreen by remember { mutableStateOf(Screen.Main) }
     val mainViewModel: MainViewModel = koinViewModel()
+
+    val currentCity by mainViewModel.city.collectAsState()
     
     AnimatedContent(
         targetState = currentScreen,
@@ -55,7 +58,8 @@ fun NavigationContainer(modifier: Modifier = Modifier) {
                     onCityClick = { city ->
                         mainViewModel.setWeatherData(city.countryCode)
                         currentScreen = Screen.Main
-                    }
+                    },
+                    currentCountryCode = currentCity?.countryCode
                 )
             }
         }

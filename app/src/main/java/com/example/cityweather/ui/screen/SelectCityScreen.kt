@@ -16,11 +16,13 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
@@ -44,9 +46,20 @@ import org.koin.androidx.compose.koinViewModel
 fun SelectCityScreen(
     onBackClick: () -> Unit = {},
     onCityClick: (CityBean) -> Unit = {},
+    currentCountryCode: String? = null,
     selectCityViewModel: SelectCityViewModel = koinViewModel()
 ) {
     val citiesList by selectCityViewModel.citiesList.collectAsState()
+    val listState = rememberLazyListState()
+
+    LaunchedEffect(citiesList, currentCountryCode) {
+        if (citiesList.isNotEmpty() && currentCountryCode != null) {
+            val targetIndex = citiesList.indexOfFirst { it.countryCode == currentCountryCode }
+            if (targetIndex >= 0) {
+                listState.scrollToItem(targetIndex)
+            }
+        }
+    }
 
     Column(
         modifier = Modifier
@@ -94,6 +107,7 @@ fun SelectCityScreen(
             }
         } else {
             LazyColumn(
+                state = listState,
                 modifier = Modifier.fillMaxSize(),
                 verticalArrangement = Arrangement.spacedBy(4.dp)
             ) {
