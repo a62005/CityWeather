@@ -107,8 +107,7 @@ fun SelectCityScreen(
                             )
                     ) {
                         CityItem(
-                            country = city.country,
-                            city = city.city,
+                            cityBean = city,
                             onClick = {
                                 onCityClick(city)
                             }

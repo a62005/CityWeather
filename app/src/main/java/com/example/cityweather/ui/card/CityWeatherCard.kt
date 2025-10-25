@@ -46,8 +46,7 @@ fun CityWeatherCard(
             )
     ) {
         CityItem(
-            country = cityBean.country, 
-            city = cityBean.city,
+            cityBean = cityBean,
             onClick = { isExpanded = !isExpanded }
         )
 

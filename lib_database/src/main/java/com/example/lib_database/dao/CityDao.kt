@@ -17,7 +17,7 @@ abstract class CityDao : BaseDao<CityBean>() {
     @Query("SELECT COUNT(*) FROM CityBean")
     abstract suspend fun getSize(): Int
 
-    @Query("SELECT * FROM CityBean ORDER BY countryCode")
+    @Query("SELECT * FROM CityBean ORDER BY city")
     abstract fun observeCity(): Flow<List<CityBean>>
 
     suspend fun isEmpty(): Boolean {
