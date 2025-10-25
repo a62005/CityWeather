@@ -51,3 +51,6 @@
 ### AI
 - Kiro (Main use) - Amazon's AI assistant for development support and code generation
 - Gemini - Google's AI model for code assistance and problem solving
+
+### Other
+- Postman - API testing tool for testing API requests and parsing data
