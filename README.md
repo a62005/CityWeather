@@ -3,8 +3,8 @@
 ## Development Environment
 - MacBook Pro (Apple M2 Pro)
 - Android Studio Ladybug | 2024.2.1
-- 
-### Android Configuration
+  
+## Android Configuration
 - Compile SDK: 36
 - Min SDK: 24
 - Target SDK: 36
